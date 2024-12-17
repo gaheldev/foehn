@@ -1,0 +1,17 @@
+{
+    "$schema": "https://raw.githubusercontent.com/AuburnSounds/dplug/master/plugin-schema.json",
+
+    "vendorName": "Gahel",
+    "vendorUniqueID": "GaHL",
+    "vendorSupportEmail": "music@gahel.fr",
+
+    "pluginName": "Foehn",
+    "pluginHomepage": "https://github.com/gaheldev/foehn",
+    "pluginUniqueID": "FoEh",
+
+    "publicVersion": "1.0.0",
+    "CFBundleIdentifierPrefix": "com.gahel",
+
+    "hasGUI": false,
+    "category": "effectDistortion"
+}
