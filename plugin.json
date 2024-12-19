@@ -8,10 +8,12 @@
     "pluginName": "Foehn",
     "pluginHomepage": "https://github.com/gaheldev/foehn",
     "pluginUniqueID": "FoEh",
-
     "publicVersion": "1.0.0",
     "CFBundleIdentifierPrefix": "com.gahel",
 
+    "licensePath": "license.md",
+
     "hasGUI": false,
+
     "category": "effectDistortion"
 }
