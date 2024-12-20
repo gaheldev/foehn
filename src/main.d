@@ -39,29 +39,33 @@ public:
         return pluginInfo;
     }
 
+    // carefull to add parameters in the same order as enum
     override Parameter[] buildParameters()
     {
         auto params = makeVec!Parameter();
-
-        params ~= mallocNew!GainParameter(paramInput, "Input", 0.0, 12.0);
+        params ~= mallocNew!GainParameter(paramInput, "Input", 12.0, 0.0);
         params ~= mallocNew!GainParameter(paramOutput, "Output", 0.0, 0.0);
-
-        params ~= mallocNew!LinearFloatParameter(paramEffect, "Effect", "%", 0.0, 100.0, 100);
+        params ~= mallocNew!LinearFloatParameter(paramEffect, "Effect", "%", 0.0, 100.0, 100.0);
         params ~= mallocNew!LinearFloatParameter(paramCurve, "Curve", "", -50.0, 50.0, 0.0);
-
         params ~= mallocNew!BoolParameter(paramEffectIn, "Effect In", true);
         params ~= mallocNew!BoolParameter(paramClip, "Clip", true);
         params ~= mallocNew!BoolParameter(paramBandSplit, "Band Split", false);
-
         return params.releaseData();
     }
 
     override LegalIO[] buildLegalIO()
     {
         auto io = makeVec!LegalIO();
-        io ~= LegalIO(0, 1);
-        io ~= LegalIO(0, 2);
+        io ~= LegalIO(1, 1);
+        io ~= LegalIO(2, 2);
         return io.releaseData();
+    }
+
+    // This override is optional, this supports plugin delay compensation in hosts.
+    // By default, 0 samples of latency.
+    override int latencySamples(double sampleRate) pure const 
+    {
+        return 0;
     }
 
     override int maxFramesInProcess()
@@ -92,4 +96,36 @@ public:
 private:
     Dsp _dsp;
 }
+
+
+/* /// A parameter with [-inf to value] dB log mapping */
+/* class GainParameter : FloatParameter */
+/* { */
+/*     this(int index, string name, double max, double defaultValue, double shape = 2.0) nothrow @nogc */
+/*     { */
+/*         super(index, name, "dB", -double.infinity, max, defaultValue); */
+/*         _shape = shape; */
+/*         setDecimalPrecision(1); */
+/*     } */
+/**/
+/*     override double toNormalized(double value) */
+/*     { */
+/*         double maxAmplitude = convertDecibelToLinearGain(_max); */
+/*         double result = ( convertDecibelToLinearGain(value) / maxAmplitude ) ^^ (1 / _shape); */
+/*         if (result < 0) */
+/*             result = 0; */
+/*         if (result > 1) */
+/*             result = 1; */
+/*         assert(isFinite(result)); */
+/*         return result; */
+/*     } */
+/**/
+/*     override double fromNormalized(double normalizedValue) */
+/*     { */
+/*         return convertLinearGainToDecibel(  (normalizedValue ^^ _shape) * convertDecibelToLinearGain(_max)); */
+/*     } */
+/**/
+/* private: */
+/*     double _shape; */
+/* } */
 
