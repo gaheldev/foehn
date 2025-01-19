@@ -25,7 +25,7 @@ nothrow @nogc:
                     outputs[chan][i] = x.gain(inputGain)
                                         .warp(clip)
                                         .waveshaper(curve)
-                                        .mix(inputs[chan][i],effect) // dry/wet
+                                        .mix(inputs[chan][i], 1.0-effect) // dry/wet
                                         .gain(outputGain);
                 else
                     outputs[chan][i] = x.gain(inputGain); // bypass all effect and gain match
