@@ -56,7 +56,6 @@ float waveshaper(float x, float curve)
 /// 0 <= x <= 1
 float wave1(float x)
 {
-    /* return 2*x - sign(x) * x^2; */
     return 2.0*x - x.sign*x^^2.0;
 }
 
