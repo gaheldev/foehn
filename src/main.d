@@ -82,8 +82,8 @@ public:
         _dsp.inputGain = convertDecibelToLinearGain(readParam!float(paramInput));
         _dsp.outputGain = convertDecibelToLinearGain(readParam!float(paramOutput));
 
-        _dsp.effect = readParam!float(paramEffect);
-        _dsp.curve = readParam!float(paramCurve);
+        _dsp.effect = readParam!float(paramEffect) / 100.0;
+        _dsp.curve = readParam!float(paramCurve) / 50.0;
         
         _dsp.effectIn = readParam!bool(paramEffectIn);
         _dsp.clip = readParam!bool(paramClip);
